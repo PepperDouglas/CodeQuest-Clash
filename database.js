@@ -260,3 +260,5 @@ const questData = [
       "answer": "Python"
     }
 ];
+
+export default questData;

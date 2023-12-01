@@ -2,7 +2,7 @@ body {
 
 }
 
-.main-container {
+.container {
     width: 90%;
     height: 60%;
     display: flex;
@@ -21,4 +21,22 @@ body {
     width: 42%;
     height: 20%;
     background-color: aqua;
+}
+
+#controls {
+
+}
+
+#new-game-button {
+    background-color: cadetblue;
+    padding: 1%
+}
+
+#high-score-button {
+    background-color: coral;
+    padding: 1%
+}
+
+#scoreboard {
+    justify-content: left;
 }

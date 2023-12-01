@@ -1,0 +1,20 @@
+{
+  "name": "codequest-clash",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "type": "module",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PepperDouglas/CodeQuest-Clash.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PepperDouglas/CodeQuest-Clash/issues"
+  },
+  "homepage": "https://github.com/PepperDouglas/CodeQuest-Clash#readme"
+}

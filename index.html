@@ -7,8 +7,8 @@
     <title>CodeQuest: Clash</title>
 </head>
 <body>
-    <div class="main-container">
-        <div class="question-container">
+    <div class="container">
+        <div class="question-container" id="question">
             QUESTION?
         </div>
         <div class="option" id="optionOne">Answer 1</div>
@@ -17,6 +17,23 @@
         <div class="option" id="optionFour">Answer 4</div>   
 
     </div>
-    
+    <div class="container" id="controls">
+        <div id="new-game-button">NEW GAME</div>
+        <div id="high-score-button">HIGHSCORE</div>
+
+    </div>
+    <div class="container" id="scoreboard">
+        <ol>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+
+        </ol>
+    </div>
+    <script type="module" src="main.js"></script>
+    <script type="module" src="./database.js"></script>
 </body>
 </html>
