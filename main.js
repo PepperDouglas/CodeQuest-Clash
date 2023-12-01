@@ -3,6 +3,8 @@ let questD = questData.default;
 let newGameButton = document.getElementById('new-game-button');
 let answerButtons = document.querySelectorAll('.option');
 let currentQuestion = 0;
+let maxHearts = 3;
+let hearts = 3;
 let questions = [];
 
 answerButtons.forEach(b => {
@@ -14,6 +16,7 @@ answerButtons.forEach(b => {
 newGameButton.addEventListener('click', InitGame);
 
 function InitGame(){
+    InitHearts();
     const questionsAmount = 10;
     let questionsUsedPosition = [];
     
@@ -44,6 +47,21 @@ function CheckAnswer(currentAnswer){
     if (currentAnswer == questions[0].answer){
         alert('Correct!')
     } else {
+        hearts--;
         alert('Wrong!');
+        UpdateHearts();
+    }
+}
+
+function InitHearts(){
+    hearts = maxHearts;
+    for(let i = 1; i <= maxHearts; i++){
+        document.getElementById(`hearts${i}`).innerHTML = "<img src=\"./images/heart-icon.svg\" width=\"30px\" height=\"30px\">";
+    }
+}
+
+function UpdateHearts(){
+    for(let i = maxHearts; i > hearts; i--){
+        document.getElementById(`hearts${i}`).innerHTML = "";
     }
 }
