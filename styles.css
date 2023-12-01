@@ -12,7 +12,7 @@ body {
 }
 #question{
     border-radius: 15px;
-    height: 65px;
+    font-size: xxx-Large;
     text: beige;
     font-size: 50px;
     
@@ -42,6 +42,10 @@ body {
     border-radius: 15px;
     text-align: center;
 }
+.option:hover{
+    background-color: rgb(12, 12, 84);
+    transform: scale(1.05);
+}
 
 #controls {
 
@@ -51,10 +55,17 @@ body {
     background-color: cadetblue;
     padding: 1%
 }
+#new-game-button:hover{
+    background-color: rgb(61, 114, 116)
+}
 
 #high-score-button {
     background-color: coral;
     padding: 1%
+}
+#high-score-button:hover{
+    background-color: rgb(184, 91, 58);
+
 }
 
 #scoreboard {
