@@ -3,24 +3,44 @@ body {
 }
 
 .container {
+    color: beige;
     width: 90%;
     height: 60%;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
 }
+#question{
+    border-radius: 15px;
+    height: 65px;
+    text: beige;
+    font-size: 50px;
+    
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    
+}
 
 .question-container {
+    border-radius: 15px;
     width: 90%;
     height: 50%;
-    background-color: aquamarine;
+    text: beige;
+    text-align: center;
+
+    background-color: rgb(15,15,132);
 }
 
 .option {
+    text: beige;
     margin: 1%;
     width: 42%;
     height: 20%;
-    background-color: aqua;
+    background-color: rgb(55, 55, 188);
+    font-size: 25px;
+    border-radius: 15px;
+    text-align: center;
 }
 
 #controls {
