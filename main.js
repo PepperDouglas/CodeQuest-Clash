@@ -5,6 +5,7 @@ let answerButtons = document.querySelectorAll('.option');
 let currentQuestion = 0;
 let maxHearts = 3;
 let hearts = 3;
+let score = 0;
 let questions = [];
 
 answerButtons.forEach(b => {
@@ -45,7 +46,9 @@ function LoadInQuestion(question){
 
 function CheckAnswer(currentAnswer){
     if (currentAnswer == questions[0].answer){
+        score++;
         alert('Correct!')
+        UpdateScore();
     } else {
         hearts--;
         alert('Wrong!');
@@ -64,4 +67,8 @@ function UpdateHearts(){
     for(let i = maxHearts; i > hearts; i--){
         document.getElementById(`hearts${i}`).innerHTML = "";
     }
+}
+
+function UpdateScore(){
+    document.getElementById('score').innerText = `Score: ${score}`;
 }
