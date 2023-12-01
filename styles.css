@@ -3,13 +3,22 @@ body {
 }
 
 .main-container {
-
+    width: 90%;
+    height: 60%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .question-container {
-
+    width: 90%;
+    height: 50%;
+    background-color: aquamarine;
 }
 
 .option {
-
+    margin: 1%;
+    width: 42%;
+    height: 20%;
+    background-color: aqua;
 }
