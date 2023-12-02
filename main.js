@@ -2,8 +2,8 @@ import * as questData from "./database.js";
 let questD = questData.default;
 let newGameButton = document.getElementById('new-game-button');
 let answerButtons = document.querySelectorAll('.option');
-let timer = setInterval(UpdateTimerBar, 180);
-let timerText = setInterval(UpdateTimerText, 100);
+let timer;
+let timerText;
 const questionsAmount = 10;
 const maxTimer = 10.0;
 let currentTimer = 0;
@@ -74,14 +74,12 @@ function CheckAnswer(currentAnswer){
     }
     if (currentQuestion == 10){
         //alert('You won!');
-        StopTimerBar();
         ResetGame();
     } else if (hearts > 0) {
         LoadInQuestion(questions[currentQuestion]);
         currentTimer = maxTimer;
     } else {
-        //alert('You lost!');
-        StopTimerBar();
+        //alert('You lost!'); 
         ResetGame();
     }
 }
@@ -89,6 +87,7 @@ function CheckAnswer(currentAnswer){
 function ResetGame(){
     hearts = 3;
     gameActive = false;
+    StopTimerBar();
     UpdateScore();
     UpdateHearts();
     EmptifyTextFields();
@@ -122,6 +121,8 @@ function UpdateTimerBar(){
 function StartTimerBar(){
     document.getElementById('timer-fill').style.width = '27.75em';
     document.getElementById('timer-time').innerText = `${maxTimer}`
+    timer = setInterval(UpdateTimerBar, 180);
+    timerText = setInterval(UpdateTimerText, 100);
     timer.StartTimer;
     timerText.StartTimer;
 }
