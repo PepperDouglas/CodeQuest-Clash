@@ -4,7 +4,6 @@ body {
 
 .container {
     color: beige;
-    width: 90%;
     height: 60%;
     display: flex;
     flex-wrap: wrap;
@@ -48,8 +47,43 @@ body {
 }
 
 #controls {
+    width: 90%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.control-buttons{
+}
+
+.timer-container{
+    color: crimson;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    display: flex;
+}
+
+#timer-container-controls{
+    display: none;
 
 }
+
+#timer-bar {
+    background-color: black;
+    width: 28em;
+}
+
+#timer-time{
+
+}
+
+#timer-fill{
+    background-color: crimson;
+    width: 27.75em;
+    height: 80%;
+    margin-top: 0.1em;
+    margin-left: 0.1em;
+}
+
 
 #new-game-button {
     background-color: cadetblue;

@@ -2,7 +2,11 @@ import * as questData from "./database.js";
 let questD = questData.default;
 let newGameButton = document.getElementById('new-game-button');
 let answerButtons = document.querySelectorAll('.option');
+let timer = setInterval(UpdateTimerBar, 180);
+let timerText = setInterval(UpdateTimerText, 100);
 const questionsAmount = 10;
+const maxTimer = 10.0;
+let currentTimer = 0;
 let gameActive = false;
 let currentQuestion = 0;
 let maxHearts = 3;
@@ -19,6 +23,9 @@ answerButtons.forEach(b => {
 newGameButton.addEventListener('click', InitGame);
 
 function InitGame(){
+    currentTimer = maxTimer;
+    SwitchControlsToTimers();
+    StartTimerBar();
     gameActive = true;
     currentQuestion = 0;
     score = 0;
@@ -54,23 +61,27 @@ function CheckAnswer(currentAnswer){
     }
     if (currentAnswer == questions[currentQuestion].answer){
         score++;
-        alert('Correct!')
+        //alert('Correct!')
         UpdateScore();
     } else {
         hearts--;
-        alert('Wrong!');
+        //alert('Wrong!');
         UpdateHearts();
     }
     if (currentQuestion < questionsAmount){
         currentQuestion++;
+        ResetTimerBar();
     }
     if (currentQuestion == 10){
-        alert('You won!');
+        //alert('You won!');
+        StopTimerBar();
         ResetGame();
     } else if (hearts > 0) {
         LoadInQuestion(questions[currentQuestion]);
+        currentTimer = maxTimer;
     } else {
-        alert('You lost!');
+        //alert('You lost!');
+        StopTimerBar();
         ResetGame();
     }
 }
@@ -82,6 +93,48 @@ function ResetGame(){
     UpdateHearts();
     EmptifyTextFields();
     UpdateScoreBoard(score);
+    SwitchTimersToControls();
+}
+
+function UpdateTimerText(){
+    let timercounter = document.getElementById('timer-time');
+    let newTime = (parseFloat(timercounter.innerText) - 0.1).toFixed(1);
+    if (newTime <= 0){
+        timercounter.innerText = '0.0'
+        CheckAnswer('');
+    } else {
+        timercounter.innerText = `${newTime}`;
+        
+    }
+
+}
+
+function UpdateTimerBar(){
+    let timerbar = document.getElementById('timer-fill');
+    let newWidth = parseFloat(timerbar.style.width.split('em')[0]) - 0.5;
+    if (newWidth <= 0){
+        timerbar.style.width = '0em';
+    } else {
+        timerbar.style.width = `${newWidth}em`;
+    }
+}
+
+function StartTimerBar(){
+    document.getElementById('timer-fill').style.width = '27.75em';
+    document.getElementById('timer-time').innerText = `${maxTimer}`
+    timer.StartTimer;
+    timerText.StartTimer;
+}
+
+function ResetTimerBar(){
+    document.getElementById('timer-fill').style.width = '27.75em';
+    document.getElementById('timer-time').innerText = `${maxTimer}`
+}
+
+function StopTimerBar(){
+    ResetTimerBar();
+    clearInterval(timer);
+    clearInterval(timerText);
 }
 
 function InitHearts(){
@@ -125,4 +178,18 @@ function UpdateScoreBoard(newResult){
     for(let i = 0; i < scorelist.length; i++){
         scorelist[i].innerText = scoreArr[i].toString();
     }
+}
+
+function SwitchControlsToTimers(){
+    let controls = document.getElementById('control-buttons-container');
+    controls.style.display = 'none';
+    let timers = document.getElementById('timer-container-controls');
+    timers.style.display = 'flex';
+}
+
+function SwitchTimersToControls(){
+    let controls = document.getElementById('control-buttons-container');
+    controls.style.display = 'flex';
+    let timers = document.getElementById('timer-container-controls');
+    timers.style.display = 'none';
 }
