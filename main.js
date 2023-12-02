@@ -2,6 +2,8 @@ import * as questData from "./database.js";
 let questD = questData.default;
 let newGameButton = document.getElementById('new-game-button');
 let answerButtons = document.querySelectorAll('.option');
+const questionsAmount = 10;
+let gameActive = false;
 let currentQuestion = 0;
 let maxHearts = 3;
 let hearts = 3;
@@ -17,8 +19,10 @@ answerButtons.forEach(b => {
 newGameButton.addEventListener('click', InitGame);
 
 function InitGame(){
+    gameActive = true;
+    currentQuestion = 0;
+    score = 0;
     InitHearts();
-    const questionsAmount = 10;
     let questionsUsedPosition = [];
     
     for(let i = 0; i < questionsAmount;){
@@ -45,7 +49,10 @@ function LoadInQuestion(question){
 }
 
 function CheckAnswer(currentAnswer){
-    if (currentAnswer == questions[0].answer){
+    if (!gameActive){
+        return;
+    }
+    if (currentAnswer == questions[currentQuestion].answer){
         score++;
         alert('Correct!')
         UpdateScore();
@@ -54,6 +61,27 @@ function CheckAnswer(currentAnswer){
         alert('Wrong!');
         UpdateHearts();
     }
+    if (currentQuestion < questionsAmount){
+        currentQuestion++;
+    }
+    if (currentQuestion == 10){
+        alert('You won!');
+        ResetGame();
+    } else if (hearts > 0) {
+        LoadInQuestion(questions[currentQuestion]);
+    } else {
+        alert('You lost!');
+        ResetGame();
+    }
+}
+
+function ResetGame(){
+    hearts = 3;
+    gameActive = false;
+    UpdateScore();
+    UpdateHearts();
+    EmptifyTextFields();
+    UpdateScoreBoard(score);
 }
 
 function InitHearts(){
@@ -71,4 +99,30 @@ function UpdateHearts(){
 
 function UpdateScore(){
     document.getElementById('score').innerText = `Score: ${score}`;
+}
+
+function EmptifyTextFields(){
+    document.getElementById('question').innerText = "QUESTION?";
+    document.getElementById('optionOne').innerText = "Answer 1";
+    document.getElementById('optionTwo').innerText = "Answer 2";
+    document.getElementById('optionThree').innerText = "Answer 3";
+    document.getElementById('optionFour').innerText = "Answer 4";
+}
+
+function UpdateScoreBoard(newResult){
+    let scorelist = document.getElementById('scorelist').children;
+    let scoreArr = [];
+    for(let i = 0; i < scorelist.length; i++){
+        scoreArr.push(parseInt(scorelist[i].innerText));
+    }
+    for(let i = 0; i < scoreArr.length; i++){
+        if(newResult > scoreArr[i]){
+            scoreArr.splice(i, 0, newResult);
+            scoreArr.pop();
+            break;
+        }
+    }
+    for(let i = 0; i < scorelist.length; i++){
+        scorelist[i].innerText = scoreArr[i].toString();
+    }
 }
