@@ -2,8 +2,8 @@ import * as questData from "./database.js";
 let questD = questData.default;
 let newGameButton = document.getElementById('new-game-button');
 let answerButtons = document.querySelectorAll('.option');
-let timer = setInterval(UpdateTimerBar, 180);
-let timerText = setInterval(UpdateTimerText, 100);
+let timer;
+let timerText;
 const questionsAmount = 10;
 const maxTimer = 10.0;
 let currentTimer = 0;
@@ -13,6 +13,8 @@ let maxHearts = 3;
 let hearts = 3;
 let score = 0;
 let questions = [];
+
+ReadLocalStorageScore();
 
 answerButtons.forEach(b => {
     b.addEventListener('click', function(e){
@@ -43,7 +45,6 @@ function InitGame(){
     questionsUsedPosition.forEach(e => {
         questions.push(questD[e]);
     });
-    //test load in first question
     LoadInQuestion(questions[currentQuestion]);
 }
 
@@ -74,14 +75,12 @@ function CheckAnswer(currentAnswer){
     }
     if (currentQuestion == 10){
         //alert('You won!');
-        StopTimerBar();
         ResetGame();
     } else if (hearts > 0) {
         LoadInQuestion(questions[currentQuestion]);
         currentTimer = maxTimer;
     } else {
-        //alert('You lost!');
-        StopTimerBar();
+        //alert('You lost!'); 
         ResetGame();
     }
 }
@@ -89,10 +88,13 @@ function CheckAnswer(currentAnswer){
 function ResetGame(){
     hearts = 3;
     gameActive = false;
-    UpdateScore();
+    StopTimerBar();
     UpdateHearts();
     EmptifyTextFields();
     UpdateScoreBoard(score);
+    SetLocalStorageScore();
+    score = 0;
+    UpdateScore();
     SwitchTimersToControls();
 }
 
@@ -122,6 +124,8 @@ function UpdateTimerBar(){
 function StartTimerBar(){
     document.getElementById('timer-fill').style.width = '27.75em';
     document.getElementById('timer-time').innerText = `${maxTimer}`
+    timer = setInterval(UpdateTimerBar, 180);
+    timerText = setInterval(UpdateTimerText, 100);
     timer.StartTimer;
     timerText.StartTimer;
 }
@@ -178,6 +182,26 @@ function UpdateScoreBoard(newResult){
     for(let i = 0; i < scorelist.length; i++){
         scorelist[i].innerText = scoreArr[i].toString();
     }
+}
+
+function ReadLocalStorageScore(){
+    if (localStorage.getItem('scores') == null){
+        return;
+    }
+    let scoreList = document.getElementById('scorelist').children;
+    let scores = localStorage.getItem('scores').split(',');
+    for(let i = 0; i < scores.length; i++){
+        scoreList[i].innerText = scores[i];
+    }
+}
+
+function SetLocalStorageScore(){
+    let scores = document.getElementById('scorelist').children;
+    let scoresArr = [];
+    for(let i = 0; i < scores.length; i++){
+        scoresArr.push(parseInt(scores[i].innerText));
+    }
+    localStorage.setItem('scores', scoresArr);
 }
 
 function SwitchControlsToTimers(){
