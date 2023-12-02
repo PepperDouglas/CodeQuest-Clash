@@ -14,6 +14,8 @@ let hearts = 3;
 let score = 0;
 let questions = [];
 
+ReadLocalStorageScore();
+
 answerButtons.forEach(b => {
     b.addEventListener('click', function(e){
         CheckAnswer(e.target.innerText);
@@ -43,7 +45,6 @@ function InitGame(){
     questionsUsedPosition.forEach(e => {
         questions.push(questD[e]);
     });
-    //test load in first question
     LoadInQuestion(questions[currentQuestion]);
 }
 
@@ -88,10 +89,12 @@ function ResetGame(){
     hearts = 3;
     gameActive = false;
     StopTimerBar();
-    UpdateScore();
     UpdateHearts();
     EmptifyTextFields();
     UpdateScoreBoard(score);
+    SetLocalStorageScore();
+    score = 0;
+    UpdateScore();
     SwitchTimersToControls();
 }
 
@@ -179,6 +182,26 @@ function UpdateScoreBoard(newResult){
     for(let i = 0; i < scorelist.length; i++){
         scorelist[i].innerText = scoreArr[i].toString();
     }
+}
+
+function ReadLocalStorageScore(){
+    if (localStorage.getItem('scores') == null){
+        return;
+    }
+    let scoreList = document.getElementById('scorelist').children;
+    let scores = localStorage.getItem('scores').split(',');
+    for(let i = 0; i < scores.length; i++){
+        scoreList[i].innerText = scores[i];
+    }
+}
+
+function SetLocalStorageScore(){
+    let scores = document.getElementById('scorelist').children;
+    let scoresArr = [];
+    for(let i = 0; i < scores.length; i++){
+        scoresArr.push(parseInt(scores[i].innerText));
+    }
+    localStorage.setItem('scores', scoresArr);
 }
 
 function SwitchControlsToTimers(){
