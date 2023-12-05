@@ -6,6 +6,8 @@ let timer;
 let timerText;
 const questionsAmount = 10;
 const maxTimer = 10.0;
+let playerAnswerIndex;
+let correctAnswerIndex;
 let currentTimer = 0;
 let gameActive = false;
 let currentQuestion = 0;
@@ -13,14 +15,13 @@ let maxHearts = 3;
 let hearts = 3;
 let score = 0;
 let questions = [];
+let AddCheck = function(e){
+    CheckAnswer(e.target.innerText);
+}
 
 ReadLocalStorageScore();
+AddClickEventForOptions();
 
-answerButtons.forEach(b => {
-    b.addEventListener('click', function(e){
-        CheckAnswer(e.target.innerText);
-    });
-});
 
 newGameButton.addEventListener('click', InitGame);
 
@@ -49,11 +50,27 @@ function InitGame(){
 }
 
 function LoadInQuestion(question){
+    let mixedArr = RandomiseOptionOrder(4);
     document.getElementById('question').innerText = question.question;
-    document.getElementById('optionOne').innerText = question.options[0];
-    document.getElementById('optionTwo').innerText = question.options[1];
-    document.getElementById('optionThree').innerText = question.options[2];
-    document.getElementById('optionFour').innerText = question.options[3];
+    document.getElementById('optionOne').innerText = question.options[mixedArr[0]];
+    document.getElementById('optionTwo').innerText = question.options[mixedArr[1]];
+    document.getElementById('optionThree').innerText = question.options[mixedArr[2]];
+    document.getElementById('optionFour').innerText = question.options[mixedArr[3]];
+}
+
+function RandomiseOptionOrder(intAmount){
+    let arr = [];
+    for(let i = 0; i < intAmount; i++){
+        arr.push(i);
+    }
+    for(let a = 0; a < arr.length; a++){
+        let rand = a;
+        while(rand == a){
+            rand = Math.floor(Math.random() * arr.length);
+        }
+        [arr[a], arr[rand]] = [arr[rand], arr[a]];
+    }
+    return arr;
 }
 
 function CheckAnswer(currentAnswer){
@@ -62,40 +79,62 @@ function CheckAnswer(currentAnswer){
     }
     if (currentAnswer == questions[currentQuestion].answer){
         score++;
-        //alert('Correct!')
-        UpdateScore();
     } else {
         hearts--;
-        //alert('Wrong!');
         UpdateHearts();
     }
+    UpdateScore();
+    StopTimerBar();
+    DisplayCorrectAnswer(currentAnswer, questions[currentQuestion]);
     if (currentQuestion < questionsAmount){
         currentQuestion++;
-        ResetTimerBar();
     }
     if (currentQuestion == 10){
-        //alert('You won!');
         ResetGame();
     } else if (hearts > 0) {
-        LoadInQuestion(questions[currentQuestion]);
-        currentTimer = maxTimer;
-    } else {
-        //alert('You lost!'); 
+        RemoveClickEventForOptions();
+        DisplayIntermissionMessage();
+        Sleep(3000).then(() => {
+            RemoveIntermissionMessage();
+            ResetOptionColors();
+            LoadInQuestion(questions[currentQuestion]);
+            currentTimer = maxTimer;
+            StartTimerBar();
+            AddClickEventForOptions();
+        })
+    } else { 
         ResetGame();
     }
+}
+
+function Sleep(ms){
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 function ResetGame(){
     hearts = 3;
     gameActive = false;
+    ResetOptionColors();
     StopTimerBar();
     UpdateHearts();
     EmptifyTextFields();
     UpdateScoreBoard(score);
     SetLocalStorageScore();
-    score = 0;
     UpdateScore();
+    score = 0;
     SwitchTimersToControls();
+}
+
+function AddClickEventForOptions(){
+    answerButtons.forEach(b => {
+        b.addEventListener('click', AddCheck);
+    });
+}
+
+function RemoveClickEventForOptions(){
+    answerButtons.forEach(b => {
+        b.removeEventListener('click', AddCheck);
+    });
 }
 
 function UpdateTimerText(){
@@ -119,6 +158,11 @@ function UpdateTimerBar(){
     } else {
         timerbar.style.width = `${newWidth}em`;
     }
+}
+
+function PauseTimers(){
+    clearInterval(timer);
+    clearInterval(timerText);
 }
 
 function StartTimerBar(){
@@ -155,7 +199,44 @@ function UpdateHearts(){
 }
 
 function UpdateScore(){
-    document.getElementById('score').innerText = `Score: ${score}`;
+    document.getElementById('score').innerText = `Score: ${score} / ${questionsAmount}`;
+}
+
+function DisplayCorrectAnswer(currentAnswer, question){
+    //Here we cant check the index from the database becase we rand the pos of the options
+    //Either we rand the fetched questions earlier, or we save the current rand options
+    //to check against instead. Solution, check against 'class: option' divs
+    let optionDivs = document.getElementsByClassName('option');
+    let optionDivsArr = [];
+    for(let i = 0; i < optionDivs.length; i++){
+        optionDivsArr.push(optionDivs[i].innerText);
+    }
+    if (!currentAnswer == ''){
+        playerAnswerIndex = optionDivsArr.indexOf(currentAnswer);
+        document.getElementsByClassName('option')[playerAnswerIndex].style.backgroundColor = 'red';
+    }
+    correctAnswerIndex = optionDivsArr.indexOf(question.answer)
+    document.getElementsByClassName('option')[correctAnswerIndex].style.backgroundColor = 'green';
+
+}
+
+function ResetOptionColors(){
+    let answerOptions = document.getElementsByClassName('option');
+    for (let i = 0; i < answerOptions.length; i++){
+        answerOptions[i].style.backgroundColor = 'rgb(55, 55, 188)';
+    }
+}
+
+function DisplayIntermissionMessage(){
+    const message = document.getElementById('timer-bar');
+    message.innerHTML = '<div id="timer-fill">Get Ready!</div>';
+    const timefillbar = document.getElementById('timer-fill');
+    timefillbar.style.color = 'blue';
+}
+
+function RemoveIntermissionMessage(){
+    const message = document.getElementById('timer-bar');
+    message.innerHTML = '<div id="timer-fill"></div>';
 }
 
 function EmptifyTextFields(){
