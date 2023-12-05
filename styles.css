@@ -70,6 +70,7 @@ body {
 #timer-bar {
     background-color: black;
     width: 28em;
+    font-size: xx-large;
 }
 
 #timer-time{
@@ -82,8 +83,15 @@ body {
     height: 80%;
     margin-top: 0.1em;
     margin-left: 0.1em;
+    text-align: center;
 }
 
+#message{
+    text-align: center;
+    font-family: math;
+    font-size: xxx-large;
+    display: none;
+}
 
 #new-game-button {
     background-color: cadetblue;
