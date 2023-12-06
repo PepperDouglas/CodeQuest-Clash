@@ -90,7 +90,9 @@ function CheckAnswer(currentAnswer){
         currentQuestion++;
     }
     if (currentQuestion == 10){
-        ResetGame();
+        Sleep(3000).then(() => {
+            ResetGame();
+        })
     } else if (hearts > 0) {
         RemoveClickEventForOptions();
         DisplayIntermissionMessage();
@@ -103,7 +105,9 @@ function CheckAnswer(currentAnswer){
             AddClickEventForOptions();
         })
     } else { 
-        ResetGame();
+        Sleep(3000).then(() => {
+            ResetGame();
+        })
     }
 }
 
