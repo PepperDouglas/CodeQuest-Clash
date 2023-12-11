@@ -19,8 +19,20 @@ let AddCheck = function(e){
     CheckAnswer(e.target.innerText);
 }
 
+//test modal
+const modal = document.getElementById('end-game-modal');
+window.onclick = function(event) {
+    //alert(event.target);
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+    
+}
+
 ReadLocalStorageScore();
 AddClickEventForOptions();
+
+
 
 
 newGameButton.addEventListener('click', InitGame);
@@ -125,8 +137,23 @@ function ResetGame(){
     UpdateScoreBoard(score);
     SetLocalStorageScore();
     UpdateScore();
+    DisplayModalMessage();
     score = 0;
     SwitchTimersToControls();
+}
+
+function DisplayModalMessage(){
+    const modalMessage = document.getElementById('modal-message');
+    const lowestHighscore = parseInt(document.getElementById('hs6').innerText);
+    let message = `You got ${score} points! `;
+    let appendMessage = '';
+    if (lowestHighscore <= score){
+        appendMessage += 'You got a new highscore!';
+    } else {
+        appendMessage += 'Try again!';
+    }
+    modal.style.display = "block";
+    modalMessage.innerText = message + appendMessage;
 }
 
 function AddClickEventForOptions(){
@@ -151,7 +178,7 @@ function UpdateTimerText(){
         timercounter.innerText = `${newTime}`;
         
     }
-
+    
 }
 
 function UpdateTimerBar(){
