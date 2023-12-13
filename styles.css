@@ -22,10 +22,8 @@ body {
     text-align: center;
     align-items: center;
     justify-content: center;
-    box-shadow: 2px 2px 5px rgb(0,0,0.2);
-    
+    box-shadow: 2px 2px 5px rgb(0,0,0.2);   
 }
-
 .question-container {
     border-radius: 15px;
     width: 90%;
@@ -45,8 +43,7 @@ body {
     font-size: 25px;
     border-radius: 15px;
     text-align: center;
-    box-shadow: 2px 2px 5px rgb(0,0,0.2);
-    
+    box-shadow: 2px 2px 5px rgb(0,0,0.2);    
 }
 .option:hover{
     background-color: rgb(12, 12, 84);
@@ -55,19 +52,54 @@ body {
 .option:active{
     transform: scale(0.9);
 }
+
+
+
+
+
+/* Mainmenu buttons */
+.button-option{
+    display: flex;
+    background-color: cadetblue;
+    margin: 3%;
+    padding: 1%;
+    border-radius: 5px;
+    height: 30px;
+    width: 200px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 2px 2px 5px rgb(0,0,0.2);
+}
+.button-option:hover{
+    background-color: rgb(61, 114, 116)
+}
 .button-option:active{
     transform: scale(0.9);
 }
-
-#controls {
-    width: 100%;
+#high-score-button{
     display: flex;
-    flex-wrap: wrap;
+    margin: 3%;
+    border-radius: 5px;
+    height: 30px;
+    width: 200px;
+    text-align: center;
+    align-items: center;
     justify-content: center;
+    box-shadow: 2px 2px 5px rgb(0,0,0.2);
+}
+#high-score-button {
+    background-color: coral;
+    padding: 1%
+}
+#high-score-button:hover{
+    background-color: rgb(184, 91, 58);
 }
 
-.control-buttons{
-}
+
+
+
+
 
 .timer-container{
     color: crimson;
@@ -105,75 +137,6 @@ body {
     font-size: xxx-large;
     display: none;
 }
-
-#new-game-button {
-    display: flex;
-    background-color: cadetblue;
-    margin: 3%;
-    padding: 1%;
-    border-radius: 5px;
-    height: 30px;
-    width: 200px;
-    text-align: center;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 2px 2px 5px rgb(0,0,0.2);
-}
-#new-game-button:hover{
-    background-color: rgb(61, 114, 116)
-}
-#high-score-button{
-    display: flex;
-    margin: 3%;
-    border-radius: 5px;
-    height: 30px;
-    width: 200px;
-    text-align: center;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 2px 2px 5px rgb(0,0,0.2);
-}
-#exit-button{
-    display: flex;
-    background-color: cadetblue;
-    margin: 3%;
-    padding: 1%;
-    border-radius: 5px;
-    height: 30px;
-    width: 200px;
-    text-align: center;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 2px 2px 5px rgb(0,0,0.2);
-}
-#high-score-button {
-    background-color: coral;
-    padding: 1%
-}
-#high-score-button:hover{
-    background-color: rgb(184, 91, 58);
-
-}
-#exit-button:hover{
-    background-color: rgb(61, 114, 116)
-}
-#about-us-button {
-    display: flex;
-    background-color: cadetblue;
-    margin: 3%;
-    padding: 1%;
-    border-radius: 5px;
-    height: 30px;
-    width: 200px;
-    text-align: center;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 2px 2px 5px rgb(0,0,0.2);
-}
-#about-us-button:hover{
-    background-color: rgb(61, 114, 116)
-}
-
 #scoreboard {
     justify-content: left;
     color: black;
