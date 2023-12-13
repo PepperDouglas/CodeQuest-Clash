@@ -78,19 +78,7 @@ body {
     transform: scale(0.9);
 }
 #high-score-button{
-    display: flex;
-    margin: 3%;
-    border-radius: 5px;
-    height: 30px;
-    width: 200px;
-    text-align: center;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 2px 2px 5px rgb(0,0,0.2);
-}
-#high-score-button {
     background-color: coral;
-    padding: 1%
 }
 #high-score-button:hover{
     background-color: rgb(184, 91, 58);
