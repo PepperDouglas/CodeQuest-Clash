@@ -2,6 +2,7 @@
 body{
     margin:auto;
 }
+
 .gradient-container{
     height: 100%;
     background: linear-gradient(#2e86c1, #0f0f84);        
@@ -62,6 +63,11 @@ body{
 }
 
 
+#scoreboard {
+    display: none;
+}
+
+
 /* Mainmenu buttons */
 #controls{
     display: flex;
@@ -118,7 +124,7 @@ body{
     border-radius:20px;
 }
 #timer-fill{
-    background-color:green;
+    background-color: rgb(0, 255, 0);
     width: 27.75em;
     height: 70%;
     margin-top: 0.1em;
