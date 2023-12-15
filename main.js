@@ -265,7 +265,8 @@ function DisplayIntermissionMessage(){
     const message = document.getElementById('timer-bar');
     message.innerHTML = '<div id="timer-fill">Get Ready!</div>';
     const timefillbar = document.getElementById('timer-fill');
-    timefillbar.style.color = 'blue';
+    timefillbar.style.color = 'Orange';
+    
 }
 
 function RemoveIntermissionMessage(){
@@ -274,11 +275,11 @@ function RemoveIntermissionMessage(){
 }
 
 function EmptifyTextFields(){
-    document.getElementById('question').innerText = "QUESTION?";
-    document.getElementById('optionOne').innerText = "Answer 1";
-    document.getElementById('optionTwo').innerText = "Answer 2";
-    document.getElementById('optionThree').innerText = "Answer 3";
-    document.getElementById('optionFour').innerText = "Answer 4";
+    document.getElementById('question').innerText = "CodeQuest-Clash";
+    document.getElementById('optionOne').innerText = " ";
+    document.getElementById('optionTwo').innerText = " ";
+    document.getElementById('optionThree').innerText = " ";
+    document.getElementById('optionFour').innerText = " ";
 }
 
 function UpdateScoreBoard(newResult){
