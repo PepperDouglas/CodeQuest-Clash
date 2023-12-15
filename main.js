@@ -1,6 +1,7 @@
 import * as questData from "./database.js";
 let questD = questData.default;
 let newGameButton = document.getElementById('new-game-button');
+let highscoreButton = document.getElementById('high-score-button');
 let answerButtons = document.querySelectorAll('.option');
 let timer;
 let timerText;
@@ -34,7 +35,7 @@ AddClickEventForOptions();
 
 
 
-
+highscoreButton.addEventListener('click', ShowHighscore);
 newGameButton.addEventListener('click', InitGame);
 
 function InitGame(){
@@ -143,6 +144,7 @@ function ResetGame(){
 }
 
 function DisplayModalMessage(){
+    document.getElementById('modal-header-text').innerText = 'Game round finished!';
     const modalMessage = document.getElementById('modal-message');
     const lowestHighscore = parseInt(document.getElementById('hs6').innerText);
     let message = `You got ${score} points! `;
@@ -184,6 +186,7 @@ function UpdateTimerText(){
 function UpdateTimerBar(){
     let timerbar = document.getElementById('timer-fill');
     let newWidth = parseFloat(timerbar.style.width.split('em')[0]) - 0.5;
+    timerbar.style.backgroundColor = `rgb(${255 - (newWidth*9)}, ${(newWidth*9)}, 0)`
     if (newWidth <= 0){
         timerbar.style.width = '0em';
     } else {
@@ -296,6 +299,21 @@ function UpdateScoreBoard(newResult){
     }
 }
 
+function ShowHighscore(){
+    document.getElementById('modal-header-text').innerText = 'High-score Table';
+    const modalMessage = document.getElementById('modal-message');
+    const scoreList = document.getElementById('scorelist').children;
+    let scoreHtml = `<ol id="modalscore">`;
+    for(let i = 0; i < scoreList.length; i++){
+        scoreHtml += `<li>${document.getElementById(`hs${i + 1}`).innerText}</li>`
+    }
+    scoreHtml += `</ol>`;
+    modal.style.display = "block";
+    modalMessage.innerHTML = scoreHtml;
+    
+
+}
+
 function ReadLocalStorageScore(){
     if (localStorage.getItem('scores') == null){
         return;
@@ -326,6 +344,7 @@ function SwitchControlsToTimers(){
 function SwitchTimersToControls(){
     let controls = document.getElementById('control-buttons-container');
     controls.style.display = 'flex';
+    controls.style.flexDirection = 'column';
     let timers = document.getElementById('timer-container-controls');
     timers.style.display = 'none';
 }
