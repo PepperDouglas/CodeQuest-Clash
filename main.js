@@ -185,12 +185,12 @@ function UpdateTimerText(){
 
 function UpdateTimerBar(){
     let timerbar = document.getElementById('timer-fill');
-    let newWidth = parseFloat(timerbar.style.width.split('em')[0]) - 0.5;
+    let newWidth = parseFloat(timerbar.style.width.split('vh')[0]) - 1.24;
     timerbar.style.backgroundColor = `rgb(${255 - (newWidth*9)}, ${(newWidth*9)}, 0)`
     if (newWidth <= 0){
-        timerbar.style.width = '0em';
+        timerbar.style.width = '0vh';
     } else {
-        timerbar.style.width = `${newWidth}em`;
+        timerbar.style.width = `${newWidth}vh`;
     }
 }
 
@@ -200,7 +200,7 @@ function PauseTimers(){
 }
 
 function StartTimerBar(){
-    document.getElementById('timer-fill').style.width = '27.75em';
+    document.getElementById('timer-fill').style.width = '68.75vh';
     document.getElementById('timer-time').innerText = `${maxTimer}`
     timer = setInterval(UpdateTimerBar, 180);
     timerText = setInterval(UpdateTimerText, 100);
@@ -209,7 +209,7 @@ function StartTimerBar(){
 }
 
 function ResetTimerBar(){
-    document.getElementById('timer-fill').style.width = '27.75em';
+    document.getElementById('timer-fill').style.width = '68.75vh';
     document.getElementById('timer-time').innerText = `${maxTimer}`
 }
 
