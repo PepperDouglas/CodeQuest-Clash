@@ -2,6 +2,7 @@ import * as questData from "./database.js";
 const questD = questData.default;
 const newGameButton = document.getElementById('new-game-button');
 const highscoreButton = document.getElementById('high-score-button');
+const creditsButton = document.getElementById('about-us-button');
 const answerButtons = document.querySelectorAll('.option');
 const modal = document.getElementById('end-game-modal');
 const questionsAmount = 10;
@@ -24,6 +25,9 @@ let addCheck = function(e){
 
 window.onclick = function(event) {
     if (event.target === modal) {
+        if (document.getElementById('modal-header-text').innerText === "Credits"){
+            document.getElementById('modal-message').innerHTML = "";
+        }
         modal.style.display = "none";
     }
 }
@@ -33,6 +37,7 @@ addClickEventForOptions();
 
 highscoreButton.addEventListener('click', showHighscore);
 newGameButton.addEventListener('click', initGame);
+creditsButton.addEventListener('click', displayCredits);
 
 function initGame(){
     let questionsUsedPosition = [];
@@ -336,4 +341,13 @@ function switchTimersToControls(){
     controls.style.flexDirection = 'column';
     let timers = document.getElementById('timer-container-controls');
     timers.style.display = 'none';
+}
+
+function displayCredits(){
+    const modalMessage = document.getElementById('modal-message');
+    const messageHtml = `<video id="credits-vid" autoplay loop>
+    <source src="./images/pdp.mp4" type="video/mp4">`;
+    document.getElementById('modal-header-text').innerText = 'Credits';
+    modal.style.display = "block";
+    modalMessage.innerHTML = messageHtml;
 }
