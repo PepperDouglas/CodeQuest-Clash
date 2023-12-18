@@ -182,17 +182,17 @@ function updateTimerText(){
 
 function updateTimerBar(){
     const timerbar = document.getElementById('timer-fill');
-    let newWidth = parseFloat(timerbar.style.width.split('vh')[0]) - 1.24;
+    let newWidth = parseFloat(timerbar.style.width.split('vw')[0]) - 1.24;
     timerbar.style.backgroundColor = `rgb(${255 - (newWidth*9)}, ${(newWidth*9)}, 0)`
     if (newWidth <= 0){
-        timerbar.style.width = '0vh';
+        timerbar.style.width = '0vw';
     } else {
-        timerbar.style.width = `${newWidth}vh`;
+        timerbar.style.width = `${newWidth}vw`;
     }
 }
 
 function startTimerBar(){
-    document.getElementById('timer-fill').style.width = '68.75vh';
+    document.getElementById('timer-fill').style.width = '68.75vw';
     document.getElementById('timer-time').innerText = `${maxTimer}`
     timer = setInterval(updateTimerBar, 180);
     timerText = setInterval(updateTimerText, 100);
