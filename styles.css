@@ -104,6 +104,38 @@ body{
     background-color: rgb(184, 91, 58);
     border-color: #f1ff5c;
 }
+@media (max-width: 440px){
+    #question{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        Height: 200px;
+        margin-bottom: 3%;
+        margin-top: 3%;
+        font-size: 25px;
+    }
+    .option{
+        display: flex;
+        flex-direction: row;
+        font-size: 16px;
+        text-align: center;
+        margin: 2%;
+        width: 180px;
+        height:140px;
+        justify-content: center;
+        align-items: center;
+    }
+    #score{
+        font-size: xx-small;
+        align-items: center;
+        margin-bottom: 50px;
+    }
+    .controls{
+        display: flex;
+        flex-direction: column;
+    }
+
+}
 
 
 /* Gametime-bar and text including highscore */
@@ -121,24 +153,58 @@ body{
     background-color: black;
     width: 70vw;
     font-size: 3vh;
+    border: 2px solid black;
     border-radius:20px;
     height: 5vh;
 }
 #timer-fill{
     background-color: rgb(0, 255, 0);
-    width: 68.75vw;
-    height: 88%;
-    margin-top: 0.1em;
-    margin-left: 0.1em;
+    width: 70vh;
+    height: 100%;
+    font-size: 3vh;
     text-align: center;
     border-radius: 20px;
 }
 .timer-container{
     color: yellow;
 }
+
+@media (max-width: 440px){
+    #timer-bar {
+        width:24vh;
+        font-size: 1vh;
+        border-radius:20px;
+    }
+    #timer-fill{
+        background-color: rgb(0, 255, 0);
+        width: 24vh;
+        height: 100%;
+        font-size: 1vh;
+        border-radius: 20px;
+    }
+    #timer-container-controls{
+        flex-wrap: wrap;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .timer-container{
+    }
+
+
+}
+
+
+
+
+
+
+
 #score{
+    display: flex;
     margin-top: 20px;
-    text-align: center;
+    align-items: center;
+    justify-content: center;
     font-size: x-large;
     color: yellow;
 }
