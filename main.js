@@ -201,7 +201,7 @@ function startTimerBar(){
 }
 
 function resetTimerBar(){
-    document.getElementById('timer-fill').style.width = '68.75vh';
+    document.getElementById('timer-fill').style.width = '68.75vw';
     document.getElementById('timer-time').innerText = `${maxTimer}`
 }
 
