@@ -141,9 +141,9 @@ function resetGame(){
     emptifyTextFields();
     updateScoreBoard(score);
     setLocalStorageScore();
-    updateScore();
     displayModalMessage();
     score = 0;
+    updateScore();
     switchTimersToControls();
 }
 
