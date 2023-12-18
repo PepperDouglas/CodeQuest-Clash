@@ -1,52 +1,49 @@
 import * as questData from "./database.js";
-let questD = questData.default;
-let newGameButton = document.getElementById('new-game-button');
-let highscoreButton = document.getElementById('high-score-button');
-let answerButtons = document.querySelectorAll('.option');
-let timer;
-let timerText;
+const questD = questData.default;
+const newGameButton = document.getElementById('new-game-button');
+const highscoreButton = document.getElementById('high-score-button');
+const answerButtons = document.querySelectorAll('.option');
+const modal = document.getElementById('end-game-modal');
 const questionsAmount = 10;
 const maxTimer = 10.0;
-let playerAnswerIndex;
-let correctAnswerIndex;
+const maxHearts = 3;
 let currentTimer = 0;
-let gameActive = false;
+let isGameActive = false;
 let currentQuestion = 0;
-let maxHearts = 3;
 let hearts = 3;
 let score = 0;
 let questions = [];
-let AddCheck = function(e){
-    CheckAnswer(e.target.innerText);
+let timer;
+let timerText;
+let playerAnswerIndex;
+let correctAnswerIndex;
+
+let addCheck = function(e){
+    checkAnswer(e.target.innerText);
 }
 
-//test modal
-const modal = document.getElementById('end-game-modal');
 window.onclick = function(event) {
-    //alert(event.target);
-    if (event.target == modal) {
+    if (event.target === modal) {
         modal.style.display = "none";
     }
-    
 }
 
-ReadLocalStorageScore();
-AddClickEventForOptions();
+readLocalStorageScore();
+addClickEventForOptions();
 
+highscoreButton.addEventListener('click', showHighscore);
+newGameButton.addEventListener('click', initGame);
 
-
-highscoreButton.addEventListener('click', ShowHighscore);
-newGameButton.addEventListener('click', InitGame);
-
-function InitGame(){
+function initGame(){
+    let questionsUsedPosition = [];
     currentTimer = maxTimer;
-    SwitchControlsToTimers();
-    StartTimerBar();
-    gameActive = true;
+    isGameActive = true;
     currentQuestion = 0;
     score = 0;
-    InitHearts();
-    let questionsUsedPosition = [];
+
+    switchControlsToTimers();
+    startTimerBar();
+    initHearts();
     
     for(let i = 0; i < questionsAmount;){
         let qPos;
@@ -56,14 +53,16 @@ function InitGame(){
             i++;
         }
     }
+
     questionsUsedPosition.forEach(e => {
         questions.push(questD[e]);
     });
-    LoadInQuestion(questions[currentQuestion]);
+
+    loadInQuestion(questions[currentQuestion]);
 }
 
-function LoadInQuestion(question){
-    let mixedArr = RandomiseOptionOrder(4);
+function loadInQuestion(question){
+    const mixedArr = randomiseOptionOrder(4);
     document.getElementById('question').innerText = question.question;
     document.getElementById('optionOne').innerText = question.options[mixedArr[0]];
     document.getElementById('optionTwo').innerText = question.options[mixedArr[1]];
@@ -71,14 +70,14 @@ function LoadInQuestion(question){
     document.getElementById('optionFour').innerText = question.options[mixedArr[3]];
 }
 
-function RandomiseOptionOrder(intAmount){
+function randomiseOptionOrder(intAmount){
     let arr = [];
     for(let i = 0; i < intAmount; i++){
         arr.push(i);
     }
     for(let a = 0; a < arr.length; a++){
         let rand = a;
-        while(rand == a){
+        while(rand === a){
             rand = Math.floor(Math.random() * arr.length);
         }
         [arr[a], arr[rand]] = [arr[rand], arr[a]];
@@ -86,64 +85,64 @@ function RandomiseOptionOrder(intAmount){
     return arr;
 }
 
-function CheckAnswer(currentAnswer){
-    if (!gameActive){
+function checkAnswer(currentAnswer){
+    if (!isGameActive){
         return;
     }
-    if (currentAnswer == questions[currentQuestion].answer){
+    if (currentAnswer === questions[currentQuestion].answer){
         score++;
     } else {
         hearts--;
-        UpdateHearts();
+        updateHearts();
     }
-    UpdateScore();
-    StopTimerBar();
-    DisplayCorrectAnswer(currentAnswer, questions[currentQuestion]);
+    updateScore();
+    stopTimerBar();
+    displayCorrectAnswer(currentAnswer, questions[currentQuestion]);
     if (currentQuestion < questionsAmount){
         currentQuestion++;
     }
-    if (currentQuestion == 10){
-        Sleep(3000).then(() => {
-            ResetGame();
+    if (currentQuestion === 10){
+        sleepTime(3000).then(() => {
+            resetGame();
         })
     } else if (hearts > 0) {
-        RemoveClickEventForOptions();
-        DisplayIntermissionMessage();
-        Sleep(3000).then(() => {
-            RemoveIntermissionMessage();
-            ResetOptionColors();
-            LoadInQuestion(questions[currentQuestion]);
+        removeClickEventForOptions();
+        displayIntermissionMessage();
+        sleepTime(3000).then(() => {
+            removeIntermissionMessage();
+            resetOptionColors();
+            loadInQuestion(questions[currentQuestion]);
             currentTimer = maxTimer;
-            StartTimerBar();
-            AddClickEventForOptions();
+            startTimerBar();
+            addClickEventForOptions();
         })
     } else { 
-        Sleep(3000).then(() => {
-            ResetGame();
+        sleepTime(3000).then(() => {
+            resetGame();
         })
     }
 }
 
-function Sleep(ms){
+function sleepTime(ms){
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-function ResetGame(){
+function resetGame(){
     hearts = 3;
-    gameActive = false;
-    ResetOptionColors();
-    StopTimerBar();
-    UpdateHearts();
-    EmptifyTextFields();
-    UpdateScoreBoard(score);
-    SetLocalStorageScore();
-    UpdateScore();
-    DisplayModalMessage();
+    isGameActive = false;
+    resetOptionColors();
+    stopTimerBar();
+    updateHearts();
+    emptifyTextFields();
+    updateScoreBoard(score);
+    setLocalStorageScore();
+    updateScore();
+    displayModalMessage();
     score = 0;
-    SwitchTimersToControls();
+    switchTimersToControls();
 }
 
-function DisplayModalMessage(){
+function displayModalMessage(){
     document.getElementById('modal-header-text').innerText = 'Game round finished!';
     const modalMessage = document.getElementById('modal-message');
     const lowestHighscore = parseInt(document.getElementById('hs6').innerText);
@@ -158,33 +157,31 @@ function DisplayModalMessage(){
     modalMessage.innerText = message + appendMessage;
 }
 
-function AddClickEventForOptions(){
+function addClickEventForOptions(){
     answerButtons.forEach(b => {
-        b.addEventListener('click', AddCheck);
+        b.addEventListener('click', addCheck);
     });
 }
 
-function RemoveClickEventForOptions(){
+function removeClickEventForOptions(){
     answerButtons.forEach(b => {
-        b.removeEventListener('click', AddCheck);
+        b.removeEventListener('click', addCheck);
     });
 }
 
-function UpdateTimerText(){
-    let timercounter = document.getElementById('timer-time');
+function updateTimerText(){
+    const timercounter = document.getElementById('timer-time');
     let newTime = (parseFloat(timercounter.innerText) - 0.1).toFixed(1);
     if (newTime <= 0){
         timercounter.innerText = '0.0'
-        CheckAnswer('');
+        checkAnswer('');
     } else {
         timercounter.innerText = `${newTime}`;
-        
     }
-    
 }
 
-function UpdateTimerBar(){
-    let timerbar = document.getElementById('timer-fill');
+function updateTimerBar(){
+    const timerbar = document.getElementById('timer-fill');
     let newWidth = parseFloat(timerbar.style.width.split('vh')[0]) - 1.24;
     timerbar.style.backgroundColor = `rgb(${255 - (newWidth*9)}, ${(newWidth*9)}, 0)`
     if (newWidth <= 0){
@@ -194,53 +191,47 @@ function UpdateTimerBar(){
     }
 }
 
-function PauseTimers(){
-    clearInterval(timer);
-    clearInterval(timerText);
-}
-
-function StartTimerBar(){
+function startTimerBar(){
     document.getElementById('timer-fill').style.width = '68.75vh';
     document.getElementById('timer-time').innerText = `${maxTimer}`
-    timer = setInterval(UpdateTimerBar, 180);
-    timerText = setInterval(UpdateTimerText, 100);
+    timer = setInterval(updateTimerBar, 180);
+    timerText = setInterval(updateTimerText, 100);
     timer.StartTimer;
     timerText.StartTimer;
 }
 
-function ResetTimerBar(){
+function resetTimerBar(){
     document.getElementById('timer-fill').style.width = '68.75vh';
     document.getElementById('timer-time').innerText = `${maxTimer}`
 }
 
-function StopTimerBar(){
-    ResetTimerBar();
+function stopTimerBar(){
+    resetTimerBar();
     clearInterval(timer);
     clearInterval(timerText);
 }
 
-function InitHearts(){
+function initHearts(){
     hearts = maxHearts;
     for(let i = 1; i <= maxHearts; i++){
         document.getElementById(`hearts${i}`).innerHTML = "<img src=\"./images/heart-icon.svg\" width=\"30px\" height=\"30px\">";
     }
 }
 
-function UpdateHearts(){
+function updateHearts(){
     for(let i = maxHearts; i > hearts; i--){
         document.getElementById(`hearts${i}`).innerHTML = "";
     }
 }
 
-function UpdateScore(){
+function updateScore(){
     document.getElementById('score').innerText = `Score: ${score} / ${questionsAmount}`;
 }
 
-function DisplayCorrectAnswer(currentAnswer, question){
+function displayCorrectAnswer(currentAnswer, question){
     //Here we cant check the index from the database becase we rand the pos of the options
-    //Either we rand the fetched questions earlier, or we save the current rand options
-    //to check against instead. Solution, check against 'class: option' divs
-    let optionDivs = document.getElementsByClassName('option');
+    //Solution, check against 'class: option' divs
+    const optionDivs = document.getElementsByClassName('option');
     let optionDivsArr = [];
     for(let i = 0; i < optionDivs.length; i++){
         optionDivsArr.push(optionDivs[i].innerText);
@@ -251,17 +242,16 @@ function DisplayCorrectAnswer(currentAnswer, question){
     }
     correctAnswerIndex = optionDivsArr.indexOf(question.answer)
     document.getElementsByClassName('option')[correctAnswerIndex].style.backgroundColor = 'green';
-
 }
 
-function ResetOptionColors(){
-    let answerOptions = document.getElementsByClassName('option');
+function resetOptionColors(){
+    const answerOptions = document.getElementsByClassName('option');
     for (let i = 0; i < answerOptions.length; i++){
         answerOptions[i].style.backgroundColor = 'rgb(55, 55, 188)';
     }
 }
 
-function DisplayIntermissionMessage(){
+function displayIntermissionMessage(){
     const message = document.getElementById('timer-bar');
     message.innerHTML = '<div id="timer-fill">Get Ready!</div>';
     const timefillbar = document.getElementById('timer-fill');
@@ -269,12 +259,12 @@ function DisplayIntermissionMessage(){
     
 }
 
-function RemoveIntermissionMessage(){
+function removeIntermissionMessage(){
     const message = document.getElementById('timer-bar');
     message.innerHTML = '<div id="timer-fill"></div>';
 }
 
-function EmptifyTextFields(){
+function emptifyTextFields(){
     document.getElementById('question').innerText = "CodeQuest-Clash";
     document.getElementById('optionOne').innerText = " ";
     document.getElementById('optionTwo').innerText = " ";
@@ -282,8 +272,8 @@ function EmptifyTextFields(){
     document.getElementById('optionFour').innerText = " ";
 }
 
-function UpdateScoreBoard(newResult){
-    let scorelist = document.getElementById('scorelist').children;
+function updateScoreBoard(newResult){
+    const scorelist = document.getElementById('scorelist').children;
     let scoreArr = [];
     for(let i = 0; i < scorelist.length; i++){
         scoreArr.push(parseInt(scorelist[i].innerText));
@@ -300,7 +290,7 @@ function UpdateScoreBoard(newResult){
     }
 }
 
-function ShowHighscore(){
+function showHighscore(){
     document.getElementById('modal-header-text').innerText = 'High-score Table';
     const modalMessage = document.getElementById('modal-message');
     const scoreList = document.getElementById('scorelist').children;
@@ -311,11 +301,9 @@ function ShowHighscore(){
     scoreHtml += `</ol>`;
     modal.style.display = "block";
     modalMessage.innerHTML = scoreHtml;
-    
-
 }
 
-function ReadLocalStorageScore(){
+function readLocalStorageScore(){
     if (localStorage.getItem('scores') == null){
         return;
     }
@@ -326,7 +314,7 @@ function ReadLocalStorageScore(){
     }
 }
 
-function SetLocalStorageScore(){
+function setLocalStorageScore(){
     let scores = document.getElementById('scorelist').children;
     let scoresArr = [];
     for(let i = 0; i < scores.length; i++){
@@ -335,14 +323,14 @@ function SetLocalStorageScore(){
     localStorage.setItem('scores', scoresArr);
 }
 
-function SwitchControlsToTimers(){
+function switchControlsToTimers(){
     let controls = document.getElementById('control-buttons-container');
     controls.style.display = 'none';
     let timers = document.getElementById('timer-container-controls');
     timers.style.display = 'flex';
 }
 
-function SwitchTimersToControls(){
+function switchTimersToControls(){
     let controls = document.getElementById('control-buttons-container');
     controls.style.display = 'flex';
     controls.style.flexDirection = 'column';
