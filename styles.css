@@ -16,9 +16,9 @@ body{
     justify-content: center;
 }
 #question{
+    display: flex;
     border-radius: 15px;
     font-size: xxx-Large;
-    text: beige;
     font-size: 50px;
     text-align: center;
     align-items: center;
@@ -29,18 +29,16 @@ body{
     border-radius: 15px;
     width: 90%;
     height: 50%;
-    text: beige;
     text-align: center;
     background-color: #0f0f84;
 }
-
 
 /* Answers */
 .option {
     display: flex;
     justify-content: center;
     align-items: center;
-    text: beige;
+    text-align: center;
     margin: 1%;
     width: 42%;
     height: 15vh;
@@ -62,13 +60,12 @@ body{
 .option:active{
     transform: scale(0.9);
 }
-#scoreboard {
-    display: none;
-}
+
 /* Mainmenu buttons */
 #controls{
     margin-top: 20px;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
@@ -104,39 +101,6 @@ body{
     background-color: rgb(184, 91, 58);
     border-color: #f1ff5c;
 }
-@media (max-width: 440px){
-    #question{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        Height: 200px;
-        margin-bottom: 3%;
-        margin-top: 3%;
-        font-size: 25px;
-    }
-    .option{
-        display: flex;
-        flex-direction: row;
-        font-size: 16px;
-        text-align: center;
-        margin: 2%;
-        width: 180px;
-        height:140px;
-        justify-content: center;
-        align-items: center;
-    }
-    #score{
-        font-size: xx-small;
-        align-items: center;
-        margin-bottom: 50px;
-    }
-    .controls{
-        display: flex;
-        flex-direction: column;
-    }
-
-}
-
 
 /* Gametime-bar and text including highscore */
 .timer-container{
@@ -147,7 +111,6 @@ body{
 #timer-container-controls{
     display: none;
     align-items: center;
-    padding-right: 8%;
 }
 #timer-bar {
     background-color: black;
@@ -169,18 +132,65 @@ body{
     color: yellow;
 }
 
-@media (max-width: 440px){
+/* Score and hearts */
+#score-center{
+    display: flex;
+    justify-content: center;
+}
+#score-container{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    border: 2px solid #f1fec6;
+    width: 28vw;
+    background-color: #f1fec6;
+    box-shadow: 2px 2px 5px black;
+    border-radius: 20px;
+}
+#score{
+    font-size: x-large;
+    color: black;
+}
+#scoreboard {
+    display:none;
+    justify-content: left;
+    color: black;
+}
+#message{
+    text-align: center;
+    font-family: math;  
+    font-size: xxx-large;
+    display: none;
+}
+
+/* Phone-size */
+@media only screen and (min-device-width: 300px) and (max-device-width: 500px){
+    #question{
+        Height: 25vh;
+        margin-bottom: 3%;
+        margin-top: 3%;
+        font-size: 25px;
+    }
+    .option{
+        font-size: 16px;
+        margin: 2%;
+        width: 20vh;
+        height:15vh;
+    }
+    #score-container{
+        margin-top: 2.5vh;
+        width: 55vw;
+        height: 4vh;
+    }
+    #score{
+        font-size: small;
+    }
     #timer-bar {
-        width:24vh;
         font-size: 1vh;
-        border-radius:20px;
     }
     #timer-fill{
         background-color: rgb(0, 255, 0);
-        width: 24vh;
-        height: 100%;
-        font-size: 1vh;
-        border-radius: 20px;
+        font-size: 4vh;
     }
     #timer-container-controls{
         flex-wrap: wrap;
@@ -188,37 +198,26 @@ body{
         justify-content: center;
         align-items: center;
     }
-    .timer-container{
+    #timer-text{
+        font-size: 27px;
+        font-family:Georgia, 'Times New Roman', Times, serif;
+        letter-spacing: 1px;
+    }
+}
+
+ /*Tablet-size 
+@media only screen and (min-device-width: 1000px) and (max-device-width: 1400px){
+    #score-container{
+        margin-top: 2.5vh;
+        width: 30vw;
+        height: 3vh;
+    }
+    #score{
+        font-size: large;
+        align-items: center;
     }
 
-
-}
-
-
-
-
-
-
-
-#score{
-    display: flex;
-    margin-top: 20px;
-    align-items: center;
-    justify-content: center;
-    font-size: x-large;
-    color: yellow;
-}
-
-#message{
-    text-align: center;
-    font-family: math;  
-    font-size: xxx-large;
-    display: none;
-}
-#scoreboard {
-    justify-content: left;
-    color: black;
-}
+}*/
 
 
 .modal {
