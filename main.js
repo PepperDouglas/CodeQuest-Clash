@@ -260,8 +260,7 @@ function displayIntermissionMessage(){
     const message = document.getElementById('timer-bar');
     message.innerHTML = '<div id="timer-fill">Get Ready!</div>';
     const timefillbar = document.getElementById('timer-fill');
-    timefillbar.style.color = 'Orange';
-    
+    timefillbar.style.color = 'Red';
 }
 
 function removeIntermissionMessage(){
